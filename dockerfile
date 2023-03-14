@@ -5,8 +5,4 @@ WORKDIR /docmt
 RUN ./build-release.sh
 COPY src/requirements.txt /root/
 RUN export MAKEFLAGS="-j$(nproc)" && pip install -r /root/requirements.txt
-COPY src/search /search
-WORKDIR /search
-RUN npm i && npm i -g .
-WORKDIR /det
-CMD ["sanic", "det.app"]
+WORKDIR /paddlefish-dev
