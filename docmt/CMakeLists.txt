@@ -13,7 +13,8 @@ endif()
 set(LIBEXT "a")
 
 ExternalProject_Add(poppler
-    URL https://poppler.freedesktop.org/poppler-0.90.1.tar.xz
+    #URL https://poppler.freedesktop.org/poppler-0.90.1.tar.xz
+    DOWNLOAD_EXTRACT_TIMESTAMP true
     CMAKE_ARGS
         -DBUILD_GTK_TESTS=OFF
         -DBUILD_QT5_TESTS=OFF
@@ -24,9 +25,16 @@ ExternalProject_Add(poppler
         -DENABLE_QT5=OFF
         -DENABLE_QT6=OFF
         -DBUILD_SHARED_LIBS=OFF
+        -UENABLE_LIBOPENJPEG
+        -DENABLE_LIBOPENJPEG=none
+        -UENABLE_CMS
+        -DENABLE_CMS=none
+        -DENABLE_LIBCURL=OFF
+        -DRUN_GPERF_IF_PRESENT=OFF
     BUILD_BYPRODUCTS ${CMAKE_BINARY_DIR}/poppler-prefix/src/poppler-build/libpoppler.${LIBEXT}
     BUILD_BYPRODUCTS ${CMAKE_BINARY_DIR}/poppler-prefix/src/poppler-build/cpp/libpoppler-cpp.${LIBEXT}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
+    URL https://gitlab.freedesktop.org/poppler/poppler/-/archive/poppler-0.90.1/poppler-poppler-0.90.1.tar.bz2
 )
 
 add_library(libpoppler SHARED IMPORTED)
@@ -76,9 +84,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     libpoppler
     png
     jpeg
-    openjp2
+    # openjp2
     tiff
-    lcms2
+    # lcms2
     nss3
     nssutil3
     smime3
